@@ -1,0 +1,14 @@
+{
+	"name": "lune 0.8.x",
+	"build": {
+		"context": ".",
+		"dockerfile": "./Dockerfile"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+			]
+		}
+	},
+	"remoteUser": "root"
+}
