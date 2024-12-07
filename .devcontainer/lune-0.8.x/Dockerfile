@@ -13,3 +13,6 @@ RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 
 ### Install Lune
 RUN /bin/bash -c "source $HOME/.cargo/env && cargo install lune --version 0.8.8 --locked"
+
+### Environment variables
+ENV year=2024
