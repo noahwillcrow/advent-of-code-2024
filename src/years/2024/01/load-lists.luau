@@ -4,11 +4,10 @@ local regex = require("@lune/regex")
 local pattern = "(?<first>[0-9]+)[ \t]+(?<second>[0-9]+)"
 local re = regex.new(pattern)
 
-return function(filePath: string): ({ number }, { number })
+return function(input: string): ({ number }, { number })
     local list1: { number } = {}
     local list2: { number } = {}
 
-    local input = fs.readFile(filePath)
     for line in input:gmatch("[^\n]+") do
         local capture = re:captures(line)
         local num1 = tonumber(capture:get(1).text)
@@ -19,5 +18,5 @@ return function(filePath: string): ({ number }, { number })
         end
     end
 
-    return list1, list2
+    return { list1, list2 }
 end

@@ -1,4 +1,11 @@
-return function(list1: { number }, list2: { number }): number
+return function(lists: { { number } }): number
+    if #lists ~= 2 then
+        error("Expected 2 lists, got " .. #lists)
+    end
+
+    local list1 = lists[1]
+    local list2 = lists[2]
+
     table.sort(list1)
     table.sort(list2)
 

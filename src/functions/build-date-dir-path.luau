@@ -1,5 +1,4 @@
-local datetime = require("@lune/datetime")
-local process = require("@lune/process")
+local determineYear = require("./determine-year.luau")
 
 return function(day: number): string
     if day < 1 or day > 25 then
@@ -8,7 +7,7 @@ return function(day: number): string
 
     local dayStr = string.format("%02d", day)
 
-    local year = if process.env.year then tonumber(process.env.year) else datetime.now().year
+    local year = determineYear()
     local yearStr = string.format("%04d", year)
 
     return "./years/" .. yearStr .. "/" .. dayStr

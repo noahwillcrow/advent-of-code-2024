@@ -1,4 +1,12 @@
-return function(list1: { number }, list2: { number }): number
+return function(lists: { { number } }): number
+    if #lists ~= 2 then
+        error("Expected 2 lists, got " .. #lists)
+    end
+
+    local list1 = lists[1]
+    local list2 = lists[2]
+    
+
     local list2AppearancesForList1Entries: {[number]: number} = {}
     for _, num in list1 do
         list2AppearancesForList1Entries[num] = 0
