@@ -4,7 +4,7 @@ local fs = require("@lune/fs")
 local loadInputFileText = require("./functions/load-input-file-text")
 local process = require("@lune/process")
 
-type Solution = { parse: (inputText: string) -> any, part1: (data: any) -> any, part2: (data: any) -> any }
+type Solution = { parse: (inputText: string) -> any, part1: (input: any) -> any, part2: (input: any) -> any }
 
 local parsedArgs = args.parseArgs({
     {
