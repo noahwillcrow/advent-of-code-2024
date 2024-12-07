@@ -47,7 +47,6 @@ function part1(input: { dependencies: { { number } }, updates: { { number } } })
 			if mustNotComeAfterByPageNumber[pageNumber] ~= nil then
 				for _, mustComeFirstPageNumber in mustNotComeAfterByPageNumber[pageNumber] do
 					if alreadyUpdated[mustComeFirstPageNumber] then
-						print(table.concat(update, ",") .. " is not correct because " .. mustComeFirstPageNumber .. " must come before " .. pageNumber)
 						return false
 					end
 				end
@@ -56,7 +55,6 @@ function part1(input: { dependencies: { { number } }, updates: { { number } } })
 			alreadyUpdated[pageNumber] = true
 		end
 
-		print("correct")
 		return true
 	end
 
@@ -73,6 +71,54 @@ function part1(input: { dependencies: { { number } }, updates: { { number } } })
 end
 
 function part2(input: { dependencies: { { number } }, updates: { { number } } })
+	local mustNotComeAfterByPageNumber: { [number]: { number } } = {}
+	for _, dependency in input.dependencies do
+		if mustNotComeAfterByPageNumber[dependency[1]] == nil then
+			mustNotComeAfterByPageNumber[dependency[1]] = {}
+		end
+
+		table.insert(mustNotComeAfterByPageNumber[dependency[1]], dependency[2])
+	end
+
+	-- returns true if corrections were applied, false if none were needed
+	local function applyCorrections(update: { number }): boolean
+		local didApplyAnyCorrections = false
+
+		local didApplyCorrections = false
+		repeat
+			didApplyCorrections = false
+			for i = 1, #update do
+				local pageNumber1 = update[i]
+				for j = i + 1, #update do
+					local pageNumber2 = update[j]
+					if mustNotComeAfterByPageNumber[pageNumber2] ~= nil and table.find(mustNotComeAfterByPageNumber[pageNumber2], pageNumber1) then
+						table.remove(update, j)
+						table.insert(update, i, pageNumber2)
+						didApplyCorrections = true
+						didApplyAnyCorrections = true
+					end
+				end
+			end
+		until not didApplyCorrections
+
+		if didApplyAnyCorrections then
+			print(table.concat(update, ",") .. " is now correct")
+		end
+
+		return didApplyAnyCorrections
+	end
+
+	local sum = 0
+
+	for _, update in input.updates do
+		local didApplyCorrections = applyCorrections(update)
+		if didApplyCorrections then
+			local middleIndex = math.ceil(#update / 2)
+			sum += update[middleIndex]
+		end
+	end
+
+	return sum
 end
 
 return {
