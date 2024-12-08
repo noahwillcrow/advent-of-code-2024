@@ -1,4 +1,5 @@
 local regex = require("@lune/regex")
+local stack = require("../../../../packages/stack/index.luau")
 
 function parse(inputText: string): { { number } }
     local lines: { { string } } = {}
@@ -25,18 +26,6 @@ function parse(inputText: string): { { number } }
 
     return lines
 end
-
-local stack = {
-    peek = function<T>(t: { T }): T?
-        return t[#t]
-    end,
-    pop = function<T>(t: { T }): T?
-        return table.remove(t, #t)
-    end,
-    push = function<T>(t: { T }, value: T)
-        table.insert(t, value)
-    end,
-}
 
 local OperatorTypes = {
     "*",
