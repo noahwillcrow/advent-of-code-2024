@@ -5,8 +5,12 @@ type Dict<K, V> = { [K]: V }
 type Input = { mapSize: v2.Vector2, antennasByFrequency: Dict<string, { v2.Vector2 }> }
 
 local ANTENNA_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+local ANTENNA_CHARS_SET = {}
+for i = 1, #ANTENNA_CHARS do
+	ANTENNA_CHARS_SET[ANTENNA_CHARS:sub(i, i)] = true
+end
 function isAntennaChar(char: string): boolean
-	return string.find(ANTENNA_CHARS, char, 1, true) ~= nil
+	return ANTENNA_CHARS_SET[char] == true
 end
 
 function parse(inputText: string): Input
